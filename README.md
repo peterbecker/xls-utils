@@ -1,6 +1,8 @@
 Excel Libraries and Tools
 =========================
 
+[![Build Status](https://travis-ci.org/peterbecker/xls-utils.svg?branch=master)](https://travis-ci.org/peterbecker/xls-utils)
+
 This is (or rather 'hopefully will be') a collection of libraries and tools to work with Excel
 files from Kotlin, building on the Apache POI library.
 
