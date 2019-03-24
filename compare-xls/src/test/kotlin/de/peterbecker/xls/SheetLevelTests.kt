@@ -5,17 +5,17 @@ import org.junit.Test
 
 class SheetLevelTests {
     @Test
-    internal fun sameSheetsIsSame() {
+    fun sameSheetsIsSame() {
         validateSame("sheet_1_2", "sheet_1_2")
     }
 
     @Test
-    internal fun sameSheetsReorderedIsSame() {
+    fun sameSheetsReorderedIsSame() {
         validateSame("sheet_2_1", "sheet_1_2")
     }
 
     @Test
-    internal fun oneSheetDiffers() {
+    fun oneSheetDiffers() {
         validateDifferences(
             "sheet_1_2", "sheet_2_3",
             StructuralDifference("Sheet1", "Extra sheet present: 'Sheet1'"),
@@ -24,7 +24,7 @@ class SheetLevelTests {
     }
 
     @Test
-    internal fun oneSheetDiffersVar2() {
+    fun oneSheetDiffersVar2() {
         validateDifferences(
             "sheet_2_3", "sheet_1_2",
             StructuralDifference("Sheet3", "Extra sheet present: 'Sheet3'"),
@@ -33,7 +33,7 @@ class SheetLevelTests {
     }
 
     @Test
-    internal fun oneSheetDiffersLenient() {
+    fun oneSheetDiffersLenient() {
         validateSame(
             compareWorkbooks(
                 wb("sheet_2_3"), wb("sheet_1_2"),
@@ -46,7 +46,7 @@ class SheetLevelTests {
     }
 
     @Test
-    internal fun oneSheetDiffersAllowExtraSheet() {
+    fun oneSheetDiffersAllowExtraSheet() {
         validateDifferences(
             compareWorkbooks(
                 wb("sheet_2_3"), wb("sheet_1_2"),
@@ -60,7 +60,7 @@ class SheetLevelTests {
     }
 
     @Test
-    internal fun oneSheetDiffersAllowMissingSheet() {
+    fun oneSheetDiffersAllowMissingSheet() {
         validateDifferences(
             compareWorkbooks(
                 wb("sheet_2_3"), wb("sheet_1_2"),
