@@ -12,7 +12,11 @@ fun wb(name: String): Workbook {
 
 fun validateSame(left: String, right: String) {
     val result = compareWorkbooks(wb(left), wb(right))
-    when(result) {
+    validateSame(result)
+}
+
+fun validateSame(result: ComparisonResult) {
+    when (result) {
         is Different ->
             throw AssertionError(
                 "Expected workbooks to be same, but found differences:\n" +

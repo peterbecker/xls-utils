@@ -4,26 +4,31 @@ import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.util.CellReference
 
-fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook): ComparisonResult {
+fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode = DiffMode.Strict): ComparisonResult {
     val differences = ArrayList<Difference>()
     toCheck.sheetIterator().forEach {
         val compareToSheet = compareTo.getSheet(it.sheetName)
         when(compareToSheet) {
-            null -> differences.add(StructuralDifference(it.sheetName, "Extra sheet present: '${it.sheetName}'"))
+            null ->
+                if(!diffMode.allowExtraSheets) {
+                    differences.add(StructuralDifference(it.sheetName, "Extra sheet present: '${it.sheetName}'"))
+                }
             else -> compareSheets(it, compareToSheet)
         }
     }
-    compareTo.sheetIterator().forEach {
-        if(toCheck.getSheet(it.sheetName) == null) {
-            differences.add(StructuralDifference(it.sheetName, "Sheet missing: '${it.sheetName}'"))
+    if(!diffMode.allowSheetsMissing) {
+        compareTo.sheetIterator().forEach {
+            if (toCheck.getSheet(it.sheetName) == null) {
+                differences.add(StructuralDifference(it.sheetName, "Sheet missing: '${it.sheetName}'"))
+            }
         }
     }
     return if (differences.isEmpty()) Same else Different(differences)
 }
 
-fun compareSheets(toCheck: Sheet, compareTo: Sheet): ComparisonResult {
+fun compareSheets(toCheck: Sheet, compareTo: Sheet, diffMode: DiffMode = DiffMode.Strict): ComparisonResult {
     val differences = ArrayList<Difference>()
-    if(toCheck.sheetName != compareTo.sheetName) {
+    if(!diffMode.allowSheetNameDifference && toCheck.sheetName != compareTo.sheetName) {
         differences.add(
             StructuralDifference(
                 toCheck.sheetName,

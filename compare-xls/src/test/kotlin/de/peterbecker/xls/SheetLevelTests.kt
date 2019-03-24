@@ -33,6 +33,47 @@ class SheetLevelTests {
     }
 
     @Test
+    internal fun oneSheetDiffersLenient() {
+        validateSame(
+            compareWorkbooks(
+                wb("sheet_2_3"), wb("sheet_1_2"),
+                DiffMode(
+                    allowExtraSheets = true,
+                    allowSheetsMissing = true
+                )
+            )
+        )
+    }
+
+    @Test
+    internal fun oneSheetDiffersAllowExtraSheet() {
+        validateDifferences(
+            compareWorkbooks(
+                wb("sheet_2_3"), wb("sheet_1_2"),
+                DiffMode(
+                    allowExtraSheets = true,
+                    allowSheetsMissing = false
+                )
+            ),
+            StructuralDifference("Sheet1", "Sheet missing: 'Sheet1'")
+        )
+    }
+
+    @Test
+    internal fun oneSheetDiffersAllowMissingSheet() {
+        validateDifferences(
+            compareWorkbooks(
+                wb("sheet_2_3"), wb("sheet_1_2"),
+                DiffMode(
+                    allowExtraSheets = false,
+                    allowSheetsMissing = true
+                )
+            ),
+            StructuralDifference("Sheet3", "Extra sheet present: 'Sheet3'")
+        )
+    }
+
+    @Test
     fun sheetNames() {
         val wb = wb("sheet_1_2")
         val s1 = wb.getSheet("Sheet1")
@@ -41,6 +82,9 @@ class SheetLevelTests {
         validateDifferences(
             compareSheets(s1, s2),
             StructuralDifference("Sheet1", "Sheet names differ: 'Sheet1' instead of 'Sheet2'")
+        )
+        validateSame(
+            compareSheets(s1, s2, DiffMode(allowSheetNameDifference = true))
         )
     }
 }
