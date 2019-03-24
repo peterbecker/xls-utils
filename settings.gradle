@@ -1,5 +1,0 @@
-rootProject.name = 'parent'
-
-include 'kotlin-xls'
-include 'assert-xls'
-include 'db2xls'
