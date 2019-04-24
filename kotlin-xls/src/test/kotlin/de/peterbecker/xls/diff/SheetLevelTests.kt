@@ -1,4 +1,4 @@
-package de.peterbecker.xls
+package de.peterbecker.xls.diff
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
@@ -84,7 +84,11 @@ class SheetLevelTests {
             StructuralDifference("Sheet1", "Sheet names differ: 'Sheet1' instead of 'Sheet2'")
         )
         validateSame(
-            compareSheets(s1, s2, DiffMode(allowSheetNameDifference = true))
+            compareSheets(
+                s1,
+                s2,
+                DiffMode(allowSheetNameDifference = true)
+            )
         )
     }
 }

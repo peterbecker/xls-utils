@@ -1,4 +1,4 @@
-package de.peterbecker.xls
+package de.peterbecker.xls.diff
 
 data class DiffMode(
     val allowExtraSheets: Boolean = false,

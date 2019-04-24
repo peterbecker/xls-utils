@@ -1,3 +1,3 @@
 rootProject.name = "parent"
 
-include("kotlin-xls", "compare-xls", "db2xls")
+include("kotlin-xls", "db2xls")

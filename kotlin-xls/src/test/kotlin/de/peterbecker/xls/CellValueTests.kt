@@ -9,7 +9,7 @@ import org.junit.Test
 class CellValueTests {
     @Test
     fun getBasicValues() {
-        val workbook = loadWorkbook("values")
+        val workbook = wb("values")
         val sheet = workbook.getSheet("basic")
         assertThat(sheet.getDoubleValueAt(0, 0)).isCloseTo(1.0, offset(0.000001))
         assertThat(sheet.getValueAt(0, 1)).isEqualTo(true)
@@ -21,11 +21,8 @@ class CellValueTests {
 
     @Test
     fun testMissingValues() {
-        val workbook = loadWorkbook("values")
+        val workbook = wb("values")
         val sheet = workbook.getSheet("basic")
         assertThat(sheet.getValueAt(100, 100)).isNull()
     }
-
-    private fun loadWorkbook(name: String) =
-        WorkbookFactory.create(CellValueTests::class.java.getResourceAsStream("/${name}.xlsx"))
 }

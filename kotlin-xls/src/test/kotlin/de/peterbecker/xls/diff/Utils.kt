@@ -1,11 +1,11 @@
-package de.peterbecker.xls
+package de.peterbecker.xls.diff
 
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.assertj.core.api.Assertions.assertThat
 
 fun wb(name: String): Workbook {
-    Thread.currentThread().contextClassLoader.getResourceAsStream("$name.xlsx").use {
+    Thread.currentThread().contextClassLoader.getResourceAsStream("diff/$name.xlsx").use {
         return WorkbookFactory.create(it)
     }
 }
@@ -26,7 +26,12 @@ fun validateSame(result: ComparisonResult) {
 }
 
 fun validateDifferences(left: String, right: String, vararg expected: Difference) =
-        validateDifferences(compareWorkbooks(wb(left), wb(right)), *expected)
+    validateDifferences(
+        compareWorkbooks(
+            wb(left),
+            wb(right)
+        ), *expected
+    )
 
 fun validateDifferences(result: ComparisonResult, vararg expected: Difference) {
     when(result) {

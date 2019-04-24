@@ -1,10 +1,12 @@
-package de.peterbecker.xls
+package de.peterbecker.xls.diff
 
+import de.peterbecker.xls.getValue
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.util.CellReference
+import java.lang.AssertionError
 
 fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode = DiffMode.Strict): ComparisonResult {
     val differences = ArrayList<Difference>()
@@ -13,7 +15,12 @@ fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode 
         when (compareToSheet) {
             null ->
                 if (!diffMode.allowExtraSheets) {
-                    differences.add(StructuralDifference(it.sheetName, "Extra sheet present: '${it.sheetName}'"))
+                    differences.add(
+                        StructuralDifference(
+                            it.sheetName,
+                            "Extra sheet present: '${it.sheetName}'"
+                        )
+                    )
                 }
             else -> {
                 val sheetCompare = compareSheets(it, compareToSheet)
@@ -26,11 +33,23 @@ fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode 
     if (!diffMode.allowSheetsMissing) {
         compareTo.sheetIterator().forEach {
             if (toCheck.getSheet(it.sheetName) == null) {
-                differences.add(StructuralDifference(it.sheetName, "Sheet missing: '${it.sheetName}'"))
+                differences.add(
+                    StructuralDifference(
+                        it.sheetName,
+                        "Sheet missing: '${it.sheetName}'"
+                    )
+                )
             }
         }
     }
     return if (differences.isEmpty()) Same else Different(differences)
+}
+
+fun validateSame(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode = DiffMode.Strict) {
+    val result = compareWorkbooks(toCheck, compareTo, diffMode)
+    when (result) {
+        is Different -> throw DocumentsDifferException(result.differences)
+    }
 }
 
 fun compareSheets(toCheck: Sheet, compareTo: Sheet, diffMode: DiffMode = DiffMode.Strict): ComparisonResult {
@@ -43,29 +62,38 @@ fun compareSheets(toCheck: Sheet, compareTo: Sheet, diffMode: DiffMode = DiffMod
             )
         )
     }
-    for (r in toCheck.firstRowNum..toCheck.lastRowNum) {
-        val rowToCheck = toCheck.getRow(r)
-        val rowToCompare = compareTo.getRow(r)
-        when (rowToCheck) {
-            null -> if (rowToCompare != null) {
-                differences.add(
-                    StructuralDifference(
-                        toCheck.sheetName,
-                        "Extra row $r in sheet '${toCheck.sheetName}'"
-                    )
-                )
-            }
-            else -> when (rowToCompare) {
-                null -> {
+    if (toCheck.lastRowNum != compareTo.lastRowNum) {
+        differences.add(
+            StructuralDifference(
+                toCheck.sheetName,
+                "'${toCheck.sheetName}' has ${toCheck.lastRowNum + 1} rows, we expect ${compareTo.lastRowNum + 1}"
+            )
+        )
+    } else {
+        for (r in 0..toCheck.lastRowNum) {
+            val rowToCheck = toCheck.getRow(r)
+            val rowToCompare = compareTo.getRow(r)
+            when (rowToCheck) {
+                null -> if (rowToCompare != null) {
                     differences.add(
                         StructuralDifference(
                             toCheck.sheetName,
-                            "Missing row $r in sheet '${toCheck.sheetName}'"
+                            "Extra row $r in sheet '${toCheck.sheetName}'"
                         )
                     )
                 }
-                else ->
-                    differences.addAll(compareRows(rowToCheck, rowToCompare))
+                else -> when (rowToCompare) {
+                    null -> {
+                        differences.add(
+                            StructuralDifference(
+                                toCheck.sheetName,
+                                "Missing row $r in sheet '${toCheck.sheetName}'"
+                            )
+                        )
+                    }
+                    else ->
+                        differences.addAll(compareRows(rowToCheck, rowToCompare))
+                }
             }
         }
     }
@@ -94,7 +122,7 @@ fun compareRows(rowToCheck: Row, rowToCompare: Row): Collection<Difference> {
                         cr(rowToCheck, c),
                         cellToCheck.getValue(),
                         null,
-                        "Cell ${crs(rowToCheck, c)} has value ${v(cellToCheck)} when it should not"
+                        "Cell ${crs(rowToCheck, c)} has value ${v(cellToCheck)} when it should not have any"
                     )
                 )
                 else -> if (cellToCheck.getValue() != cellToCompare.getValue()) {
@@ -103,10 +131,8 @@ fun compareRows(rowToCheck: Row, rowToCompare: Row): Collection<Difference> {
                             cr(rowToCheck, c),
                             cellToCheck.getValue(),
                             cellToCompare.getValue(),
-                            "Cell ${crs(
-                                rowToCheck,
-                                c
-                            )} has value ${v(cellToCheck)} when it should be ${v(cellToCompare)}"
+                            "Cell ${crs(rowToCheck, c)} " +
+                                    "has value ${v(cellToCheck)} when it should be ${v(cellToCompare)}"
                         )
                     )
                 }
@@ -132,6 +158,13 @@ data class CellContentDifference(
     override val message: String
 ) :
     Difference()
+
+class DocumentsDifferException(
+    val differences: List<Difference>
+) : Exception(
+    "Documents differ:\n" + differences.joinToString(prefix = " - ", separator = ",\n") { it.message }
+)
+
 
 private fun cr(row: Row, col: Int) = CellReference(row.sheet.sheetName, row.rowNum, col, false, false)
 private fun crs(row: Row, col: Int) = cr(row, col).formatAsString()
