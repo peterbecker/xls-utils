@@ -5,7 +5,7 @@ group = "de.peterbecker.xls"
 version = "1.0-SNAPSHOT"
 
 plugins {
-    kotlin("jvm") version "1.3.11"
+    kotlin("jvm") version "1.4.0"
 }
 
 repositories {
