@@ -4,5 +4,8 @@ target
 local
 temp
 
+.gradle
+build
+
 # Open Office
 .~*#
