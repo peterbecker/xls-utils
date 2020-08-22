@@ -22,6 +22,7 @@ fun validateSame(result: ComparisonResult) {
                 "Expected workbooks to be same, but found differences:\n" +
                         result.differences.joinToString("\n") { it.message }
             )
+        Same -> Unit
     }
 }
 

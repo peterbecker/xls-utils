@@ -1,7 +1,6 @@
 package de.peterbecker.xls
 
 import org.apache.poi.ss.usermodel.Sheet
-import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset.offset
 import org.junit.Test

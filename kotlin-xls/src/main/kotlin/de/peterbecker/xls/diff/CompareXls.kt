@@ -6,13 +6,11 @@ import org.apache.poi.ss.usermodel.Row
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.util.CellReference
-import java.lang.AssertionError
 
 fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode = DiffMode.Strict): ComparisonResult {
     val differences = ArrayList<Difference>()
     toCheck.sheetIterator().forEach {
-        val compareToSheet = compareTo.getSheet(it.sheetName)
-        when (compareToSheet) {
+        when (val compareToSheet = compareTo.getSheet(it.sheetName)) {
             null ->
                 if (!diffMode.allowExtraSheets) {
                     differences.add(
@@ -23,8 +21,7 @@ fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode 
                     )
                 }
             else -> {
-                val sheetCompare = compareSheets(it, compareToSheet)
-                when (sheetCompare) {
+                when (val sheetCompare = compareSheets(it, compareToSheet)) {
                     is Different -> differences.addAll(sheetCompare.differences)
                 }
             }
@@ -46,8 +43,7 @@ fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode 
 }
 
 fun validateSame(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode = DiffMode.Strict) {
-    val result = compareWorkbooks(toCheck, compareTo, diffMode)
-    when (result) {
+    when (val result = compareWorkbooks(toCheck, compareTo, diffMode)) {
         is Different -> throw DocumentsDifferException(result.differences)
     }
 }
@@ -146,7 +142,7 @@ sealed class ComparisonResult
 object Same : ComparisonResult()
 data class Different(val differences: List<Difference>) : ComparisonResult()
 
-sealed class Difference() {
+sealed class Difference {
     abstract val message: String
 }
 
