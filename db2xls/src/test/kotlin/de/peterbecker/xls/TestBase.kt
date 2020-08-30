@@ -3,17 +3,15 @@ package de.peterbecker.xls
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
-import org.h2.jdbcx.JdbcDataSource
-import javax.sql.DataSource
+import java.sql.Connection
+import java.sql.DriverManager
 
 abstract class TestBase {
-    protected fun ds(): DataSource {
-        val ds = JdbcDataSource()
-        ds.setURL("jdbc:h2:mem:test;INIT=RUNSCRIPT FROM '${resourceUrl("init.sql")}'")
-        ds.user = "sa"
-        ds.password = ""
-        return ds
-    }
+    protected fun con(): Connection = DriverManager.getConnection(
+        "jdbc:h2:mem:test;INIT=RUNSCRIPT FROM '${resourceUrl("init.sql")}'",
+        "sa",
+        ""
+    )
 
     fun wb(name: String): Workbook {
         Thread.currentThread().contextClassLoader.getResourceAsStream("$name.xlsx").use {

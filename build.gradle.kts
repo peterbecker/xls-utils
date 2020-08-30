@@ -12,10 +12,6 @@ repositories {
     mavenCentral()
 }
 
-tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
-}
-
 tasks.withType<Wrapper> {
     gradleVersion = "5.3"
     distributionType = Wrapper.DistributionType.ALL
@@ -27,6 +23,10 @@ subprojects {
 
     repositories {
         mavenCentral()
+    }
+
+    tasks.withType<KotlinCompile> {
+        kotlinOptions.jvmTarget = "11"
     }
 
     dependencies {

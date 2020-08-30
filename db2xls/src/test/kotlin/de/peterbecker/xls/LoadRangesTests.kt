@@ -12,7 +12,9 @@ class LoadRangesTests : TestBase() {
     @Test
     @Ignore("Not yet finished")
     fun `test load two ranges`() {
-        val act = runReports(wb("countries_template"), ds())
+        val act = con().use{
+            runReports(wb("countries_template"), it)
+        }
         val popSheet = act.getSheet("Countries by Population")
         // TODO: for some reason the strings in column A aren't written
         assertThat(popSheet.getValueAt(1, 0)).isEqualTo("China")

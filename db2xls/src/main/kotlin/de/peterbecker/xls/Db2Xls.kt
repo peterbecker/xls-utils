@@ -1,36 +1,39 @@
 package de.peterbecker.xls
 
+import com.sksamuel.hoplite.ConfigLoader
 import mu.KotlinLogging
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.ss.usermodel.WorkbookFactory
+import java.io.File
+import java.io.FileOutputStream
 import java.sql.Connection
+import java.sql.DriverManager
 import java.sql.ResultSet
-import javax.sql.DataSource
+import kotlin.system.exitProcess
 
 private val logger = KotlinLogging.logger {}
 
 const val queryPrefix = "Query_"
 
-fun runReports(wb: Workbook, data: DataSource): Workbook {
-    data.connection.use {con ->
-        val toRemove = mutableListOf<Int>()
-        wb.sheetIterator().forEach {
-            val name = it.sheetName
-            if(name.startsWith(queryPrefix, ignoreCase = true) && name.length > queryPrefix.length) {
-                processQuery(wb, it, con)
-                toRemove += wb.getSheetIndex(it)
-            }
+fun runReports(wb: Workbook, con: Connection): Workbook {
+    val toRemove = mutableListOf<Int>()
+    wb.sheetIterator().forEach {
+        val name = it.sheetName
+        if (name.startsWith(queryPrefix, ignoreCase = true) && name.length > queryPrefix.length) {
+            processQuery(wb, it, con)
+            toRemove += wb.getSheetIndex(it)
         }
-        toRemove.reversed().forEach {
-            wb.removeSheetAt(it)
-        }
+    }
+    toRemove.reversed().forEach {
+        wb.removeSheetAt(it)
     }
     return wb
 }
 
 fun processQuery(wb: Workbook, sheet: Sheet, con: Connection) {
     logger.info { "Processing ${sheet.sheetName}" }
-    when (val query = sheet.getValueAt(0,0)) {
+    when (val query = sheet.getValueAt(0, 0)) {
         is String -> {
             processQuery(wb, query, sheet.sheetName.substring(queryPrefix.length), con)
         }
@@ -58,4 +61,33 @@ fun toLists(rs: ResultSet): Iterable<List<Any?>> = rs.use {
     }.toList()
 }
 
+fun main(args: Array<String>) {
+    when (args.size) {
+        1 -> {
+            val config = ConfigLoader().loadConfigOrThrow<Config>(File(args[0]))
+            val template = WorkbookFactory.create(File(config.template))
+            val result = DriverManager.getConnection(config.db.url, config.db.user, config.db.password).use {
+                runReports(template, it)
+            }
+            result.write(FileOutputStream(config.output))
+        }
+        else -> {
+            println("Please provide a path to a configuration file as sole argument.")
+            exitProcess(1)
+        }
+    }
+}
+
 class InvalidInputException(override val message: String) : Exception(message)
+
+data class DatabaseConfig(
+    val url: String,
+    val user: String,
+    val password: String
+)
+
+data class Config(
+    val db: DatabaseConfig,
+    val template: String,
+    val output: String
+)
