@@ -2,6 +2,7 @@ package de.peterbecker.xls
 
 import de.peterbecker.xls.diff.validateSame
 import org.apache.poi.ss.usermodel.Workbook
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
 
 class RangeWritingTests {
@@ -20,7 +21,7 @@ class RangeWritingTests {
 
     @Test(expected = RowTooLongException::class)
     fun testRowTooLong() {
-        val act = writeToTestRange(
+        writeToTestRange(
             listOf(
                 listOf(1, 2, 3, 4),
                 listOf(),
@@ -28,7 +29,6 @@ class RangeWritingTests {
                 listOf(1, 2, 3, 4)
             )
         )
-        validateSame(act, getTestWorkbook())
     }
 
     @Test(expected = NamedRangeNotFound::class)

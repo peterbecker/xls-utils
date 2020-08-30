@@ -15,6 +15,8 @@ fun Sheet.setValueAt(row: Int, col: Int, value: Any?) {
                 }
             }
         }
-        else -> this.createRow(row).createCell(col).setValue(value)
+        else -> this.getOrCreateRow(row).getOrCreateCell(col).setValue(value)
     }
 }
+
+fun Sheet.getOrCreateRow(row: Int) = this.getRow(row) ?: this.createRow(row)!!

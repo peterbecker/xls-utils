@@ -98,6 +98,22 @@ fun compareSheets(toCheck: Sheet, compareTo: Sheet, diffMode: DiffMode = DiffMod
 
 fun compareRows(rowToCheck: Row, rowToCompare: Row): Collection<Difference> {
     val differences = ArrayList<Difference>()
+    if(rowToCheck.firstCellNum != rowToCompare.firstCellNum) {
+        differences.add(
+            StructuralDifference(
+                rowToCheck.sheet.sheetName,
+            "Row starts at ${crs(rowToCheck, rowToCheck.firstCellNum.toInt())}, " +
+                    "when it should start at ${crs(rowToCompare, rowToCompare.firstCellNum.toInt())}")
+        )
+    }
+    if(rowToCheck.lastCellNum != rowToCompare.lastCellNum) {
+        differences.add(
+            StructuralDifference(
+                rowToCheck.sheet.sheetName,
+            "Row ends at ${crs(rowToCheck, rowToCheck.lastCellNum.toInt())}, " +
+                    "when it should end at ${crs(rowToCompare, rowToCompare.lastCellNum.toInt())}")
+        )
+    }
     for (c in rowToCheck.firstCellNum..rowToCheck.lastCellNum) {
         val cellToCheck = rowToCheck.getCell(c)
         val cellToCompare = rowToCompare.getCell(c)

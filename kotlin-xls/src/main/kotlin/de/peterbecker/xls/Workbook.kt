@@ -3,6 +3,7 @@ package de.peterbecker.xls
 import org.apache.poi.ss.SpreadsheetVersion
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.util.AreaReference
+import org.apache.poi.ss.util.CellReference
 
 fun Workbook.writeToRange(name: String, rows: Iterator<List<Any?>>) {
     val range = this.getName(name) ?: throw NamedRangeNotFound(name)
@@ -14,13 +15,16 @@ fun Workbook.writeToRange(name: String, rows: Iterator<List<Any?>>) {
         if (row.size > width) {
             throw RowTooLongException(name, r + 1, width, row.size)
         }
-        var c = 0
-        for (value in row) {
+        for ((c, value) in row.withIndex()) {
             sheet.setValueAt(ref.firstCell.row + r, ref.firstCell.col + c, value)
-            c++
         }
         r++
     }
+    range.refersToFormula = AreaReference(
+        ref.firstCell,
+        CellReference(ref.firstCell.row + r, ref.lastCell.col),
+        SpreadsheetVersion.EXCEL2007
+    ).formatAsString()
 }
 
 fun Workbook.writeToRange(name: String, rows: Iterable<List<Any?>>) {
