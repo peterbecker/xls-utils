@@ -1,10 +1,10 @@
 package de.peterbecker.xls
 
-import org.apache.poi.ss.usermodel.Workbook
-import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory
 
-fun wb(name: String): Workbook {
+fun wb(name: String): XSSFWorkbook {
     Thread.currentThread().contextClassLoader.getResourceAsStream("$name.xlsx").use {
-        return WorkbookFactory.create(it)
+        return XSSFWorkbookFactory.create(it) as XSSFWorkbook
     }
 }

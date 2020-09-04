@@ -9,17 +9,7 @@ fun Workbook.writeToRange(name: String, rows: Iterator<List<Any?>>) {
     val range = this.getName(name) ?: throw NamedRangeNotFound(name)
     val ref = AreaReference(range.refersToFormula, SpreadsheetVersion.EXCEL2007)
     val sheet = this.getSheet(range.sheetName)
-    val width = ref.lastCell.col - ref.firstCell.col + 1
-    var r = 0
-    for (row in rows) {
-        if (row.size > width) {
-            throw RowTooLongException(name, r + 1, width, row.size)
-        }
-        for ((c, value) in row.withIndex()) {
-            sheet.setValueAt(ref.firstCell.row + r, ref.firstCell.col + c, value)
-        }
-        r++
-    }
+    val r = sheet.writeToArea(ref, rows)
     range.refersToFormula = AreaReference(
         ref.firstCell,
         CellReference(ref.firstCell.row + r, ref.lastCell.col),
