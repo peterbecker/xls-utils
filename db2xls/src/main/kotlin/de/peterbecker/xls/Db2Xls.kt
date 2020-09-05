@@ -5,6 +5,8 @@ import mu.KotlinLogging
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.sql.Connection
@@ -16,7 +18,7 @@ private val logger = KotlinLogging.logger {}
 
 const val queryPrefix = "Query_"
 
-fun runReports(wb: Workbook, con: Connection): Workbook {
+fun runReports(wb: XSSFWorkbook, con: Connection): Workbook {
     val toRemove = mutableListOf<Int>()
     wb.sheetIterator().forEach {
         val name = it.sheetName
@@ -31,7 +33,7 @@ fun runReports(wb: Workbook, con: Connection): Workbook {
     return wb
 }
 
-fun processQuery(wb: Workbook, sheet: Sheet, con: Connection) {
+fun processQuery(wb: XSSFWorkbook, sheet: Sheet, con: Connection) {
     logger.info { "Processing ${sheet.sheetName}" }
     when (val query = sheet.getValueAt(0, 0)) {
         is String -> {
@@ -43,10 +45,10 @@ fun processQuery(wb: Workbook, sheet: Sheet, con: Connection) {
     }
 }
 
-fun processQuery(wb: Workbook, query: String, targetName: String, con: Connection) {
+fun processQuery(wb: XSSFWorkbook, query: String, targetName: String, con: Connection) {
     con.createStatement().use { stmt ->
         stmt.executeQuery(query).use { rs ->
-            wb.writeToRange(targetName, toLists(rs))
+            wb.writeData(targetName, toLists(rs))
         }
     }
 }
@@ -65,7 +67,7 @@ fun main(args: Array<String>) {
     when (args.size) {
         1 -> {
             val config = ConfigLoader().loadConfigOrThrow<Config>(File(args[0]))
-            val template = WorkbookFactory.create(File(config.template))
+            val template = XSSFWorkbookFactory.create(File(config.template)) as XSSFWorkbook
             val result = DriverManager.getConnection(config.db.url, config.db.user, config.db.password).use {
                 runReports(template, it)
             }

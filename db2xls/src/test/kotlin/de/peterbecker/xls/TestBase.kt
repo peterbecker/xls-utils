@@ -1,8 +1,8 @@
 package de.peterbecker.xls
 
 import org.apache.poi.ss.usermodel.Sheet
-import org.apache.poi.ss.usermodel.Workbook
-import org.apache.poi.ss.usermodel.WorkbookFactory
+import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory
 import java.sql.Connection
 import java.sql.DriverManager
 
@@ -13,9 +13,9 @@ abstract class TestBase {
         ""
     )
 
-    fun wb(name: String): Workbook {
+    fun wb(name: String): XSSFWorkbook {
         Thread.currentThread().contextClassLoader.getResourceAsStream("$name.xlsx").use {
-            return WorkbookFactory.create(it)
+            return XSSFWorkbookFactory.create(it) as XSSFWorkbook
         }
     }
 

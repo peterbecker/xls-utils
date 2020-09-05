@@ -12,7 +12,7 @@ class LoadRangesTests : TestBase() {
     @Test
     fun `test load two ranges`() {
         val act = con().use{
-            runReports(wb("countries_template"), it)
+            runReports(wb("countries_template_ranges"), it)
         }
         val popSheet = act.getSheet("Countries by Population")
         assertThat(popSheet.getValueAt(1, 0)).isEqualTo("China")
