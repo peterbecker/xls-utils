@@ -20,11 +20,13 @@ fun XSSFWorkbook.writeToTable(name: String, rows: Iterator<List<Any?>>) {
         SpreadsheetVersion.EXCEL2007
     )
     val r = table.xssfSheet.writeToArea(areaNoHeader, rows)
-    table.area = AreaReference(
-        table.area.firstCell,
-        CellReference(table.area.firstCell.row + r, table.area.lastCell.col),
-        SpreadsheetVersion.EXCEL2007
-    )
+    if(r > 0) {
+        table.area = AreaReference(
+            table.area.firstCell,
+            CellReference(table.area.firstCell.row + r, table.area.lastCell.col),
+            SpreadsheetVersion.EXCEL2007
+        )
+    }
 }
 
 fun XSSFWorkbook.writeToTable(name: String, rows: Iterable<List<Any?>>) {
