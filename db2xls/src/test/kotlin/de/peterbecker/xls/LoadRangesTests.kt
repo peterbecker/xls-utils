@@ -5,8 +5,7 @@ import org.apache.poi.ss.usermodel.Name
 import org.apache.poi.ss.util.AreaReference
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class LoadRangesTests : TestBase() {
     @Test

@@ -1,7 +1,7 @@
 package de.peterbecker.xls.diff
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class SheetLevelTests {
     @Test

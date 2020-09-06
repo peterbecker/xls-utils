@@ -3,9 +3,11 @@ package de.peterbecker.xls
 import de.peterbecker.xls.diff.validateSame
 import org.apache.poi.ss.usermodel.Workbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.junit.Test
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Test
 
-abstract class RowWritingTests(private val templateFile: String) {
+abstract class RowWritingTests(private val templateFile: String, private val type: String) {
     @Test
     fun testEmptyData() {
         val act = writeToTarget(listOf())
@@ -19,22 +21,31 @@ abstract class RowWritingTests(private val templateFile: String) {
         validateSame(act, getTestWorkbook())
     }
 
-    @Test(expected = RowTooLongException::class)
+    @Test
     fun testRowTooLong() {
-        writeToTarget(
-            listOf(
-                listOf(1, 2, 3, 4),
-                listOf(),
-                listOf(1, 2, 3, 4, 5),
-                listOf(1, 2, 3, 4)
+        val exception = Assertions.assertThrows(RowTooLongException::class.java) {
+            writeToTarget(
+                listOf(
+                    listOf(1, 2, 3, 4),
+                    listOf(),
+                    listOf(1, 2, 3, 4, 5),
+                    listOf(1, 2, 3, 4)
+                )
             )
-        )
+        }
+        assertThat(exception.rowNumber).isEqualTo(2)
+        assertThat(exception.rangeWidth).isEqualTo(4)
+        assertThat(exception.rowLength).isEqualTo(5)
     }
 
-    @Test(expected = NameNotFound::class)
+    @Test
     fun testInvalidName() {
         val wb = getTestWorkbook()
-        wb.writeToRange("not_target_range", listOf())
+        val exception = Assertions.assertThrows(NameNotFound::class.java) {
+            wb.writeToRange("not_target_range", listOf())
+        }
+        assertThat(exception.name).isEqualTo("not_target_range")
+        assertThat(exception.type).isEqualTo(type)
     }
 
     @Test
