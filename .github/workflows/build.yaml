@@ -20,3 +20,8 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
       - name: Build with Maven
         run: mvn -B package
+      - name: Publish Bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: db2xls-bundle.jar
+          path: db2xls-bundle/target/db2xls-bundle-*.jar

@@ -18,7 +18,14 @@ Contents:
 Quick Start
 ===========
 
-To use the command line tool, you need to build this project first using:
+Finding or building the tool
+----------------------------
+
+There is currently no fully published version of this tool, but you can find the result of the most recent builds
+in the "Artifacts" section of the builds in the "Action" tab on Github. The documentation on running the example
+assumes you downloaded or checkout out a copy of the source code either way.
+
+To build the command line tool, you need to build this project first using:
 
 ```shell script
 mvn package
@@ -27,8 +34,17 @@ mvn package
 This requires a [Java Development Kit (JDK) 11 or greater](https://adoptopenjdk.net/), and 
 [Maven 3.5](https://maven.apache.org/) or greater.
 
+Running the Example
+-------------------
+
 Once the build has finished, go into `db2xls-bundle/sample` -- this contains a fully functional example with a
 script `run.sh` to execute it (it's a single command, if you can't use the script run it directly).
+
+If you downloaded the tool, copy the file into this folder and run:
+
+```shell script
+java -jar db2xls-bundle.jar countries.conf
+```
 
 This will:
 * load the configuration from the `countries.conf` file
@@ -38,6 +54,9 @@ This will:
 * run queries as specified in the top left cells of the `Query_...` sheets
 * fill in the tables with matching names (e.g. the query from `Query_Population` will fill the table named `Population`)
 * write the result to `Countries.xlsx` as per configuration file
+
+Running Other Queries
+---------------------
 
 The bundled version of this tool includes a number of database driver, currently:
 
@@ -75,7 +94,7 @@ Once that is done, name the input template in the configuration file, give the o
 via this command:
 
 ```shell script
-java -jar db2xls-bundle-*.jar MY_CONFIG.conf
+java -jar db2xls-bundle*.jar MY_CONFIG.conf
 ```
 
 If you have more than one version of the tool, expand the `*` to the one you want to use.
@@ -96,7 +115,7 @@ If you need to query a database engine not supported out of the box, you also ne
 Most RDBMS offer such a driver. You then need to run the following command instead:
 
 ```shell script
-java -cp db2xls-bundle-*.jar:JBDC_DRIVER_FILE.jar de.peterbecker.xls.Db2XlsKt MY_CONFIG.conf
+java -cp db2xls-bundle*.jar:JBDC_DRIVER_FILE.jar de.peterbecker.xls.Db2XlsKt MY_CONFIG.conf
 ```
 
 On Windows the separator has to be a semicolon instead of the colon. Alternatively you can edit `db2xls-bundle/pom.xml`
