@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 
 class CellValueTests {
     @Test
-    fun getBasicValues() {
+    fun `read basic values`() {
         val workbook = wb("values")
         val sheet = workbook.getSheet("basic")
         assertThat(sheet.getDoubleValueAt(0, 0)).isCloseTo(1.0, offset(0.000001))
@@ -19,7 +19,7 @@ class CellValueTests {
     private fun Sheet.getDoubleValueAt(row: Int, col: Int) = this.getValueAt(row, col) as Double?
 
     @Test
-    fun testMissingValues() {
+    fun `read absent cells`() {
         val workbook = wb("values")
         val sheet = workbook.getSheet("basic")
         assertThat(sheet.getValueAt(100, 100)).isNull()

@@ -3,6 +3,7 @@ package de.peterbecker.xls
 import org.apache.poi.ss.SpreadsheetVersion
 import org.apache.poi.ss.util.AreaReference
 import org.apache.poi.ss.util.CellReference
+import org.apache.poi.xssf.usermodel.XSSFChartSheet
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.IOException
@@ -43,3 +44,13 @@ fun XSSFWorkbook.writeData(targetName: String, rows: Iterator<List<Any?>>) {
 fun XSSFWorkbook.writeData(targetName: String, rows: Iterable<List<Any?>>) {
     writeData(targetName, rows.iterator())
 }
+
+fun XSSFWorkbook.findChartByTitle(title: String) =
+        this.sheetIterator().asSequence()
+                .mapNotNull {
+                    when(it) {
+                        is XSSFSheet -> it.findChartByTitle(title)
+                        else -> null
+                    }
+                }
+                .firstOrNull()
