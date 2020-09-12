@@ -122,3 +122,22 @@ On Windows the separator has to be a semicolon instead of the colon. Alternative
 to tailor the JDBC drivers in the file -- you can remove any you don't need this way as well. Note that the ones
 specified in this file will pick up a version from the `pom.xml` in the top folder, you will have to specify the
 version when adding custom ones, but this can be done directly in `db2xls-bundle/pom.xml`.
+
+Programmatic Use
+================
+
+The logic behind the command line tool is all behind a single method in the `db2xls` module:
+
+```
+de.peterbecker.xls.Db2Xls::runReports(..)
+```
+
+This operates on POI `Workbook` objects, it takes the template and a JDBC connection and returns the modified workbook.
+Note that at the time of writing it will operate on the input, so the template will have to be copied or loaded before
+each use.
+
+The workbook objects can be written to any output stream, which can be used to upload files somewhere or to use them
+as a response to a HTTP request.
+
+The `kotlin-xls` library contains lower-level functions that are not relating to database interactions. This includes
+the ability to write in-memory data into the named tables or ranges.
