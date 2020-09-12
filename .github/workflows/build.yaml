@@ -23,5 +23,5 @@ jobs:
       - name: Publish Bundle
         uses: actions/upload-artifact@v2
         with:
-          name: Bundle
+          name: db2xls-bundle.jar
           path: db2xls-bundle/target/db2xls-bundle-*.jar
