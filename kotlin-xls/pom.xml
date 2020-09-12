@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.github.peterbecker</groupId>
+        <artifactId>xls-utils</artifactId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>kotlin-xls</artifactId>
+
+    <name>Kotlin Utilities for XLS files</name>
+    <description>
+        This is a number of extensions and additional classes to make handling XLS files easier in Kotlin.
+    </description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+        </dependency>
+    </dependencies>
+</project>

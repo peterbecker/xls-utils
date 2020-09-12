@@ -3,6 +3,3 @@ install: true
 
 jdk:
   - openjdk11
-
-script:
-  - ./gradlew test

@@ -4,9 +4,6 @@ target
 local
 temp
 
-.gradle
-build
-
 # MS Office temp files
 ~$*
 

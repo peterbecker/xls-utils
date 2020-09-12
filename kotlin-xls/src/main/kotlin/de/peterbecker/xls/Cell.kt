@@ -15,15 +15,12 @@ fun Cell.getValue(): Any? =
 fun Cell.setValue(value: Any) {
     when (value) {
         is Boolean -> {
-            this.cellType = CellType.BOOLEAN
             this.setCellValue(value)
         }
         is Number -> {
-            this.cellType = CellType.NUMERIC
             this.setCellValue(value.toDouble())
         }
         else -> {
-            this.cellType = CellType.STRING
             this.setCellValue(value.toString())
         }
     }
