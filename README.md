@@ -1,7 +1,7 @@
 Excel Libraries and Tools
 =========================
 
-![Build Status](https://github.com/peterbecker/xls-utils/workflows/Build/badge.svg)
+[![Build Status](https://github.com/peterbecker/xls-utils/workflows/Build/badge.svg)](https://github.com/peterbecker/xls-utils/actions)
 
 This is a collection of libraries and tools to work with Excel
 files from Kotlin, building on the [Apache POI library](https://poi.apache.org/).
@@ -22,8 +22,8 @@ Finding or building the tool
 ----------------------------
 
 There is currently no fully published version of this tool, but you can find the result of the most recent builds
-in the "Artifacts" section of the builds in the "Action" tab on Github. The documentation on running the example
-assumes you downloaded or checkout out a copy of the source code either way.
+in the "Artifacts" section of the builds in [Github Actions](https://github.com/peterbecker/xls-utils/actions).
+The documentation on running the example assumes you downloaded or checkout out a copy of the source code either way.
 
 To build the command line tool, you need to build this project first using:
 
