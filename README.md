@@ -11,3 +11,5 @@ Contents:
 * `kotlin-xls` - a wrapper around POI to make handling Excel files easier, also includes code to compare
    Excel workbooks, aimed primarily at unit testing
 * `db2xls` - a command line utility to run an SQL query via JDBC and write the results into an Excel file
+* `db2xls-bundle` - a version of `db2xls` bundled into a single JAR with all dependencies and some common
+  JDBC drivers
