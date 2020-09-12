@@ -1,7 +1,7 @@
 package de.peterbecker.xls.diff
 
 import org.apache.poi.ss.util.CellReference
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class ValueTests {
     @Test

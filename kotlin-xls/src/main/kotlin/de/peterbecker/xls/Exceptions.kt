@@ -2,17 +2,6 @@ package de.peterbecker.xls
 
 import java.lang.IllegalArgumentException
 
-class NoSuchRowException(
-    val sheetName: String,
-    val rowNumber: Int
-) : IllegalArgumentException("Out of range: no row $rowNumber on sheet '$sheetName'")
-
-class NoSuchCellException(
-    val sheetName: String,
-    val rowNumber: Int,
-    val colNumber: Int
-) : IllegalArgumentException("Out of range: no column $colNumber in row $rowNumber on sheet '$sheetName'")
-
 class RowTooLongException(
     val rowNumber: Int,
     val rangeWidth: Int,

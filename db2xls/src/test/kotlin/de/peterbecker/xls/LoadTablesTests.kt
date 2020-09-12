@@ -4,7 +4,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFTable
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
-import org.junit.Test
+import org.junit.jupiter.api.Test
 
 class LoadTablesTests : TestBase() {
     @Test
