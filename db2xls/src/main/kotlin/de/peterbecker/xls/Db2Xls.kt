@@ -3,8 +3,6 @@ package de.peterbecker.xls
 import com.sksamuel.hoplite.ConfigLoader
 import mu.KotlinLogging
 import org.apache.poi.ss.usermodel.Sheet
-import org.apache.poi.ss.usermodel.Workbook
-import org.apache.poi.ss.usermodel.WorkbookFactory
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory
 import java.io.File
@@ -18,7 +16,7 @@ private val logger = KotlinLogging.logger {}
 
 const val queryPrefix = "Query_"
 
-fun runReports(wb: XSSFWorkbook, con: Connection): Workbook {
+fun runReports(wb: XSSFWorkbook, con: Connection): XSSFWorkbook {
     val toRemove = mutableListOf<Int>()
     wb.sheetIterator().forEach {
         val name = it.sheetName
