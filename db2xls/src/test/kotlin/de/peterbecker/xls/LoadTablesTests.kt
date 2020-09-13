@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 
 class LoadTablesTests : TestBase() {
     @Test
-    fun `test load two tables`() {
+    fun `load two tables`() {
         val act = con().use {
             runReports(wb("countries_template_tables"), it)
         }

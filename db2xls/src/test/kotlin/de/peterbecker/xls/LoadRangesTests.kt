@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 
 class LoadRangesTests : TestBase() {
     @Test
-    fun `test load two ranges`() {
+    fun `load two ranges`() {
         val act = con().use{
             runReports(wb("countries_template_ranges"), it)
         }
