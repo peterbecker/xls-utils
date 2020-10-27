@@ -1,7 +1,7 @@
 package de.peterbecker.xls
 
+import de.peterbecker.xls.assertThat
 import org.apache.poi.xssf.usermodel.XSSFSheet
-import org.apache.poi.xssf.usermodel.XSSFTable
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.data.Offset
 import org.junit.jupiter.api.Test
@@ -24,20 +24,7 @@ class LoadTablesTests : TestBase() {
         // should have dropped the query sheets
         assertThat(act.numberOfSheets).isEqualTo(1)
         // ranges should match the new areas
-        assertThat(sheet.tables.first { it.name == "Population" }).matches(
-            { isTable(it, 1, 0, 11, 1) },
-            "Table area matches"
-        )
-        assertThat(sheet.tables.first { it.name == "Size" }).matches(
-            { isTable(it, 1, 3, 11, 4) },
-            "Table area matches"
-        )
-    }
-
-    private fun isTable(table: XSSFTable, top: Int, left: Short, bottom: Int, right: Short): Boolean {
-        return table.area.firstCell.row == top &&
-                table.area.firstCell.col == left &&
-                table.area.lastCell.row == bottom &&
-                table.area.lastCell.col == right
+        assertThat(sheet.tables.first { it.name == "Population" }.area).hasRange(1, 0, 11, 1)
+        assertThat(sheet.tables.first { it.name == "Size" }.area).hasRange(1, 3, 11, 4)
     }
 }
