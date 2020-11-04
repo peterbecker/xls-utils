@@ -20,7 +20,7 @@ fun XSSFWorkbook.writeToTable(name: String, rows: Iterator<List<Any?>>) {
         CellReference(table.area.lastCell.row, table.area.lastCell.col),
         SpreadsheetVersion.EXCEL2007
     )
-    val r = table.xssfSheet.writeToArea(areaNoHeader, rows)
+    val r = table.xssfSheet.writeToArea(areaNoHeader, rows).height
     if(r > 0) {
         table.area = AreaReference(
             table.area.firstCell,

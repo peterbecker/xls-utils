@@ -1,7 +1,9 @@
 package de.peterbecker.xls
 
+import org.apache.poi.ss.SpreadsheetVersion
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.ss.util.AreaReference
+import org.apache.poi.ss.util.CellReference
 import java.awt.Dimension
 
 fun Sheet.getValueAt(row: Int, col: Int) = this.getRow(row)?.getCell(col)?.getValue()
@@ -23,7 +25,10 @@ fun Sheet.setValueAt(row: Int, col: Int, value: Any?) {
 
 fun Sheet.getOrCreateRow(row: Int) = this.getRow(row) ?: this.createRow(row)!!
 
-fun Sheet.writeToArea(ref: AreaReference, rows: Iterator<List<Any?>>): Int {
+/**
+ * Writes data into the provided area and beyond, returning the area used when writing.
+ */
+fun Sheet.writeToArea(ref: AreaReference, rows: Iterator<List<Any?>>): AreaReference {
     val width = ref.lastCell.col - ref.firstCell.col + 1
     var r = 0
     for (row in rows) {
@@ -35,5 +40,7 @@ fun Sheet.writeToArea(ref: AreaReference, rows: Iterator<List<Any?>>): Int {
         }
         r++
     }
-    return r
+    return AreaReference(
+            ref.firstCell, CellReference(ref.firstCell.row + r - 1, ref.lastCell.col), SpreadsheetVersion.EXCEL2007
+    )
 }

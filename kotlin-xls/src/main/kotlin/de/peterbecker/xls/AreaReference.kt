@@ -9,3 +9,9 @@ fun AreaReference.contains(other: AreaReference) =
                 this.firstCell.row <= other.firstCell.row &&
                 this.lastCell.col >= other.lastCell.col &&
                 this.lastCell.row >= other.lastCell.row
+
+val AreaReference.height: Int
+    get() = this.lastCell.row - this.firstCell.row + 1
+
+val AreaReference.width: Int
+    get() = this.lastCell.col - this.firstCell.col + 1
