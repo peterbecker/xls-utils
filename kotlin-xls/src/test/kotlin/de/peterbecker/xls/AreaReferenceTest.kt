@@ -40,5 +40,20 @@ internal class AreaReferenceTest {
         assertThat(ar("SheetX!A3:ZZ5").width).isEqualTo(27 * 26)
     }
 
+    @Test
+    internal fun `area adjustments`() {
+        val area = ar("SheetX!D3:G7")
+        assertThat(area.derive().formatAsString()).isEqualTo("SheetX!D3:G7")
+        assertThat(area.derive(top=3).formatAsString()).isEqualTo("SheetX!D6:G7")
+        assertThat(area.derive(top=-2).formatAsString()).isEqualTo("SheetX!D1:G7")
+        assertThat(area.derive(left=4).formatAsString()).isEqualTo("SheetX!G3:H7") // columns flipped
+        assertThat(area.derive(left=-1).formatAsString()).isEqualTo("SheetX!C3:G7")
+        assertThat(area.derive(bottom=4).formatAsString()).isEqualTo("SheetX!D3:G11")
+        assertThat(area.derive(bottom=-5).formatAsString()).isEqualTo("SheetX!D2:G3") // rows flipped
+        assertThat(area.derive(right=3).formatAsString()).isEqualTo("SheetX!D3:J7")
+        assertThat(area.derive(right=-2).formatAsString()).isEqualTo("SheetX!D3:E7")
+        assertThat(area.derive(top = -1, left = -1, bottom = 1, right = 1).formatAsString()).isEqualTo("SheetX!C2:H8")
+    }
+
     private fun ar(ref: String) = AreaReference(ref, SpreadsheetVersion.EXCEL2007)
 }

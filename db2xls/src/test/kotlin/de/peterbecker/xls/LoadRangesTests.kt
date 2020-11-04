@@ -27,11 +27,11 @@ class LoadRangesTests : TestBase() {
         assertThat(act.numberOfSheets).isEqualTo(2)
         // ranges should match the new areas
         assertThat(act.getName("Population")).matches(
-            { isRange(it, "Countries by Population", 1, 0, 11, 1) },
+            { isRange(it, "Countries by Population", 1, 0, 10, 1) },
             "Range does not match"
         )
         assertThat(act.getName("Size")).matches(
-            { isRange(it, "Countries by Size", 1, 0, 11, 1) },
+            { isRange(it, "Countries by Size", 1, 0, 10, 1) },
             "Range does not match"
         )
     }

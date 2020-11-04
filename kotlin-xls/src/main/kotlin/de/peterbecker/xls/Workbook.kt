@@ -14,12 +14,7 @@ fun Workbook.writeToRange(name: String, rows: Iterator<List<Any?>>) {
 fun Workbook.writeToRange(range: Name, rows: Iterator<List<Any?>>) {
     val ref = AreaReference(range.refersToFormula, SpreadsheetVersion.EXCEL2007)
     val sheet = this.getSheet(range.sheetName)
-    val r = sheet.writeToArea(ref, rows).height
-    range.refersToFormula = AreaReference(
-        ref.firstCell,
-        CellReference(ref.firstCell.row + r, ref.lastCell.col),
-        SpreadsheetVersion.EXCEL2007
-    ).formatAsString()
+    range.refersToFormula = sheet.writeToArea(ref, rows).formatAsString()
 }
 
 fun Workbook.writeToRange(name: String, rows: Iterable<List<Any?>>) {
