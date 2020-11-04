@@ -28,7 +28,7 @@ fun Sheet.writeToArea(ref: AreaReference, rows: Iterator<List<Any?>>): Int {
     var r = 0
     for (row in rows) {
         if (row.size > width) {
-            throw RowTooLongException(r + 1, width, row.size)
+            throw RowTooLongException(r, width, row.size)
         }
         for ((c, value) in row.withIndex()) {
             setValueAt(ref.firstCell.row + r, ref.firstCell.col + c, value)
