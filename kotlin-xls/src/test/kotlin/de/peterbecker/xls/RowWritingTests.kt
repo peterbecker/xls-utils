@@ -42,7 +42,7 @@ abstract class RowWritingTests(private val templateFile: String, private val typ
     fun testInvalidName() {
         val wb = getTestWorkbook()
         val exception = Assertions.assertThrows(NameNotFound::class.java) {
-            wb.writeToRange("not_target_range", listOf())
+            writeToTarget(wb, "not_target_range", listOf())
         }
         assertThat(exception.name).isEqualTo("not_target_range")
         assertThat(exception.type).isEqualTo(type)
