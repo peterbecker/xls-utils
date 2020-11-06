@@ -2,6 +2,7 @@ package de.peterbecker.xls
 
 import de.peterbecker.xls.diff.validateSame
 import org.apache.poi.ss.usermodel.Workbook
+import org.apache.poi.ss.util.AreaReference
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions
@@ -69,5 +70,5 @@ abstract class RowWritingTests(private val templateFile: String, private val typ
 
     private fun getTestWorkbook() = wb(templateFile)
 
-    protected abstract fun writeToTarget(wb: XSSFWorkbook, name: String, rows: Iterable<List<Any?>>)
+    protected abstract fun writeToTarget(wb: XSSFWorkbook, name: String, rows: Iterable<List<Any?>>): AreaReference
 }

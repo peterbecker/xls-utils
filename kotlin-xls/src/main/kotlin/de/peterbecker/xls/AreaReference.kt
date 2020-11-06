@@ -4,8 +4,8 @@ import org.apache.poi.ss.SpreadsheetVersion
 import org.apache.poi.ss.util.AreaReference
 
 
-fun AreaReference.contains(other: AreaReference) =
-        this.firstCell.sheetName == other.firstCell.sheetName &&
+fun AreaReference.contains(other: AreaReference, ignoreSheet: Boolean = false) =
+        (ignoreSheet || this.firstCell.sheetName == other.firstCell.sheetName) &&
                 this.firstCell.col <= other.firstCell.col &&
                 this.firstCell.row <= other.firstCell.row &&
                 this.lastCell.col >= other.lastCell.col &&

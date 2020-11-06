@@ -41,6 +41,6 @@ fun Sheet.writeToArea(ref: AreaReference, rows: Iterator<List<Any?>>): AreaRefer
         r++
     }
     return AreaReference(
-            ref.firstCell, CellReference(ref.firstCell.row + r - 1, ref.lastCell.col), SpreadsheetVersion.EXCEL2007
+            ref.firstCell, ref.lastCell.replace(row = ref.firstCell.row + r - 1), SpreadsheetVersion.EXCEL2007
     )
 }

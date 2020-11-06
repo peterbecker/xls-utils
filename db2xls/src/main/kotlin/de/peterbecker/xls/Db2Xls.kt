@@ -46,7 +46,8 @@ fun processQuery(wb: XSSFWorkbook, sheet: Sheet, con: Connection) {
 fun processQuery(wb: XSSFWorkbook, query: String, targetName: String, con: Connection) {
     con.createStatement().use { stmt ->
         stmt.executeQuery(query).use { rs ->
-            wb.writeData(targetName, toLists(rs))
+            val area = wb.writeData(targetName, toLists(rs))
+            wb.expandChartReferences(area)
         }
     }
 }
