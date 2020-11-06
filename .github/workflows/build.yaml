@@ -25,3 +25,9 @@ jobs:
         with:
           name: db2xls-bundle.jar
           path: db2xls-bundle/target/db2xls-bundle-*.jar
+      - name: Publish Unit Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v1.4
+        if: always()
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          files: test-results/**/*.xml
