@@ -1,3 +1,5 @@
+@file:Suppress("DuplicatedCode") // the XML classes don't have common base types and we can't change that
+
 package de.peterbecker.xls
 
 import org.apache.poi.ss.SpreadsheetVersion
@@ -18,6 +20,19 @@ fun XSSFChart.expandReferences(area: AreaReference) {
     plotArea.pieChartList.forEach { chart ->
         chart.serList.forEach { series ->
             updateStrRef(series.cat.strRef, area)
+            updateNumRef(series.`val`.numRef, area)
+        }
+    }
+    plotArea.pie3DChartList.forEach { chart ->
+        chart.serList.forEach { series ->
+            updateStrRef(series.cat.strRef, area)
+            updateNumRef(series.`val`.numRef, area)
+        }
+    }
+    plotArea.doughnutChartList.forEach { chart ->
+        chart.serList.forEach { series ->
+            updateStrRef(series.cat.strRef, area)
+            updateNumRef(series.`val`.numRef, area)
         }
     }
     plotArea.lineChartList.forEach { chart ->
@@ -28,7 +43,6 @@ fun XSSFChart.expandReferences(area: AreaReference) {
     }
 }
 
-@Suppress("DuplicatedCode") // no common base class in library
 private fun updateStrRef(ctRef: CTStrRef, area: AreaReference) {
     val ref = AreaReference(ctRef.f, SpreadsheetVersion.EXCEL2007)
     if (area.contains(ref, true) && area.firstCell.row == ref.firstCell.row) {
@@ -37,7 +51,6 @@ private fun updateStrRef(ctRef: CTStrRef, area: AreaReference) {
     }
 }
 
-@Suppress("DuplicatedCode") // no common base class in library
 private fun updateNumRef(ctRef: CTNumRef, area: AreaReference) {
     val ref = AreaReference(ctRef.f, SpreadsheetVersion.EXCEL2007)
     if (area.contains(ref, true) && area.firstCell.row == ref.firstCell.row) {

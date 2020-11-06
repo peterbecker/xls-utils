@@ -141,3 +141,17 @@ as a response to a HTTP request.
 
 The `kotlin-xls` library contains lower-level functions that are not relating to database interactions. This includes
 the ability to write in-memory data into the named tables or ranges.
+
+Limitations
+===========
+
+Excel does not reference named ranges or tables by their name, but the actual range. Whenever the range changes, all
+charts and other visualizations need to be updated. This is currently not fully implemented. The following 
+visualizations are supported, others will not be updated to reflect the data loaded:
+
+* Line Charts
+* Pie Charts
+* 3D Pie Charts
+* Doughnut Charts
+
+Please feel free to request support for others as needed.
