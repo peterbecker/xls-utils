@@ -18,14 +18,17 @@ Contents:
 Quick Start
 ===========
 
-Finding or building the tool
-----------------------------
+Downloading the Bundled Version
+-------------------------------
 
-There is currently no fully published version of this tool, but you can find the result of the most recent builds
-in the "Artifacts" section of the builds in [Github Actions](https://github.com/peterbecker/xls-utils/actions).
-The documentation on running the example assumes you downloaded or checkout out a copy of the source code either way.
+You can find the pre-packaged bundles on [the GitHub releases](https://github.com/peterbecker/xls-utils/releases), these
+contain the program itself with some common database connectors. 
 
-To build the command line tool, you need to build this project first using:
+Building from Source
+--------------------
+
+To build the tool, get a copy of the source by cloning this repository or downloading a ZIP from the release page. Then
+run this command inside the project folder:
 
 ```shell script
 mvn package
@@ -36,6 +39,8 @@ This requires a [Java Development Kit (JDK) 11 or greater](https://adoptopenjdk.
 
 Running the Example
 -------------------
+
+The documentation on running the example assumes you downloaded or checked out a copy of the source code as well.
 
 Once the build has finished, go into `db2xls-bundle/sample` -- this contains a fully functional example with a
 script `run.sh` to execute it (it's a single command, if you can't use the script run it directly).
