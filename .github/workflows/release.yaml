@@ -18,11 +18,11 @@ jobs:
         run: mvn -B deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload binary to release
+      - name: Attach binary to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: db2xls-bundle/target/db2xls-bundle-*.jar
+          file: db2xls-bundle/target/db2xls-bundle-${{ github.event.release.tag_name }}.jar
           asset_name: Executable Bundle
           tag: ${{ github.ref }}
           overwrite: true
