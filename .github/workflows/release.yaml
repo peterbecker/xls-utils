@@ -18,8 +18,12 @@ jobs:
         run: mvn -B deploy
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish Bundle
-        uses: actions/upload-artifact@v2
+      - name: Upload binary to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          name: db2xls-bundle.jar
-          path: db2xls-bundle/target/db2xls-bundle-*.jar
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: db2xls-bundle/target/db2xls-bundle-*.jar
+          asset_name: Executable Bundle
+          tag: ${{ github.ref }}
+          overwrite: true
+          body: "An executable JAR, pre-packaged with some JDBC drivers."
