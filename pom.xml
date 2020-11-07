@@ -26,6 +26,14 @@
         <tag>HEAD</tag>
     </scm>
 
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>GitHub Packages</name>
+            <url>https://maven.pkg.github.com/peterbecker/xls-utils</url>
+        </repository>
+    </distributionManagement>
+
     <modules>
         <module>kotlin-xls</module>
         <module>db2xls</module>
