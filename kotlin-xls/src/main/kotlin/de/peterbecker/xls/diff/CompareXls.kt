@@ -23,6 +23,7 @@ fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode 
             else -> {
                 when (val sheetCompare = compareSheets(it, compareToSheet)) {
                     is Different -> differences.addAll(sheetCompare.differences)
+                    is Same -> Unit
                 }
             }
         }
@@ -45,6 +46,7 @@ fun compareWorkbooks(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode 
 fun validateSame(toCheck: Workbook, compareTo: Workbook, diffMode: DiffMode = DiffMode.Strict) {
     when (val result = compareWorkbooks(toCheck, compareTo, diffMode)) {
         is Different -> throw DocumentsDifferException(result.differences)
+        is Same -> Unit
     }
 }
 

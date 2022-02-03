@@ -4,7 +4,6 @@ import com.sksamuel.hoplite.ConfigLoader
 import mu.KotlinLogging
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import org.apache.poi.xssf.usermodel.XSSFWorkbookFactory
 import java.io.File
 import java.io.FileOutputStream
 import java.sql.Connection
@@ -66,7 +65,7 @@ fun main(args: Array<String>) {
     when (args.size) {
         1 -> {
             val config = ConfigLoader().loadConfigOrThrow<Config>(File(args[0]))
-            val template = XSSFWorkbookFactory.create(File(config.template)) as XSSFWorkbook
+            val template = XSSFWorkbook(File(config.template))
             val result = DriverManager.getConnection(config.db.url, config.db.user, config.db.password).use {
                 runReports(template, it)
             }
