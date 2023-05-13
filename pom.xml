@@ -44,6 +44,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.8.21</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
+        <jvm.target>17</jvm.target>
     </properties>
 
     <dependencyManagement>
@@ -67,17 +68,6 @@
                 <groupId>com.sksamuel.hoplite</groupId>
                 <artifactId>hoplite-hocon</artifactId>
                 <version>2.7.4</version>
-                <!-- note: exclusions are for reference, they don't work in POMs, and we don't use a BOM yet -->
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <artifactId>kotlin-stdlib-common</artifactId>
-                    </exclusion>
-                    <exclusion>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <artifactId>kotlin-reflect</artifactId>
-                    </exclusion>
-                </exclusions>
             </dependency>
             <dependency>
                 <groupId>io.github.microutils</groupId>
@@ -88,6 +78,11 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>1.4.7</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.logging.log4j</groupId>
+                <artifactId>log4j-to-slf4j</artifactId>
+                <version>2.17.1</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -151,7 +146,7 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
                 <configuration>
-                    <jvmTarget>11</jvmTarget>
+                    <jvmTarget>${jvm.target}</jvmTarget>
                 </configuration>
                 <executions>
                     <execution>
@@ -171,6 +166,15 @@
         </plugins>
         <pluginManagement>
             <plugins>
+                <plugin>
+                    <!-- we don't compile Java, but tools like IntelliJ derive the availability of JDK APIs from this version -->
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>${jvm.target}</source>
+                        <target>${jvm.target}</target>
+                    </configuration>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
