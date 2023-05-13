@@ -15,7 +15,7 @@
     <licenses>
         <license>
             <name>Apache-2.0</name>
-            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
     </licenses>
 
@@ -42,7 +42,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.6.10</kotlin.version>
+        <kotlin.version>1.8.21</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
     </properties>
 
@@ -61,13 +61,13 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>5.2.0</version>
+                <version>5.2.3</version>
             </dependency>
             <dependency>
                 <groupId>com.sksamuel.hoplite</groupId>
                 <artifactId>hoplite-hocon</artifactId>
-                <version>1.4.16</version>
-                <!-- note: exclusions are for reference, they don't work in POMs and we don't use a BOM yet -->
+                <version>2.7.4</version>
+                <!-- note: exclusions are for reference, they don't work in POMs, and we don't use a BOM yet -->
                 <exclusions>
                     <exclusion>
                         <groupId>org.jetbrains.kotlin</groupId>
@@ -82,32 +82,32 @@
             <dependency>
                 <groupId>io.github.microutils</groupId>
                 <artifactId>kotlin-logging-jvm</artifactId>
-                <version>2.1.21</version>
+                <version>3.0.5</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.10</version>
+                <version>1.4.7</version>
             </dependency>
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>2.1.210</version>
+                <version>2.1.214</version>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.3.7</version>
+                <version>42.6.0</version>
             </dependency>
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
-                <version>8.0.28</version>
+                <version>8.0.33</version>
             </dependency>
             <dependency>
                 <groupId>com.microsoft.sqlserver</groupId>
                 <artifactId>mssql-jdbc</artifactId>
-                <version>10.2.0.jre17</version>
+                <version>12.2.0.jre11</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -125,15 +125,16 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.8.2</version>
+            <version>5.9.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.22.0</version>
+            <version>3.24.2</version>
             <scope>test</scope>
         </dependency>
+        <!--suppress VulnerableLibrariesLocal - test only, no newer version available -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

@@ -64,7 +64,7 @@ fun toLists(rs: ResultSet): Iterable<List<Any?>> = rs.use {
 fun main(args: Array<String>) {
     when (args.size) {
         1 -> {
-            val config = ConfigLoader().loadConfigOrThrow<Config>(File(args[0]))
+            val config = ConfigLoader().loadConfigOrThrow<Config>(args[0])
             val template = XSSFWorkbook(File(config.template))
             val result = DriverManager.getConnection(config.db.url, config.db.user, config.db.password).use {
                 runReports(template, it)
