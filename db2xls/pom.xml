@@ -2,7 +2,7 @@
 <project>
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>de.peterbecker</groupId>
+        <groupId>com.github.peterbecker</groupId>
         <artifactId>xls-utils</artifactId>
         <version>0.0-SNAPSHOT</version>
     </parent>
@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>de.peterbecker</groupId>
+            <groupId>com.github.peterbecker</groupId>
             <artifactId>kotlin-xls</artifactId>
             <version>0.0-SNAPSHOT</version>
         </dependency>
