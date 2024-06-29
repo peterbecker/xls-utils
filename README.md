@@ -2,6 +2,7 @@ Excel Libraries and Tools
 =========================
 
 [![Build Status](https://github.com/peterbecker/xls-utils/workflows/Build/badge.svg)](https://github.com/peterbecker/xls-utils/actions)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/de.peterbecker/kotlin-xls/badge.svg)](https://maven-badges.herokuapp.com/maven-central/de.peterbecker/kotlin-xls)
 
 This is a collection of libraries and tools to work with Excel
 files from Kotlin, building on the [Apache POI library](https://poi.apache.org/).
