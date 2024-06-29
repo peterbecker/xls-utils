@@ -42,7 +42,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.8.21</kotlin.version>
+        <kotlin.version>1.9.24</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
         <jvm.target>17</jvm.target>
     </properties>
@@ -62,12 +62,12 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>5.2.3</version>
+                <version>5.2.5</version>
             </dependency>
             <dependency>
                 <groupId>com.sksamuel.hoplite</groupId>
                 <artifactId>hoplite-hocon</artifactId>
-                <version>2.7.4</version>
+                <version>2.7.5</version>
             </dependency>
             <dependency>
                 <groupId>io.github.microutils</groupId>
@@ -77,7 +77,7 @@
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.4.12</version>
+                <version>1.5.6</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -87,22 +87,22 @@
             <dependency>
                 <groupId>com.h2database</groupId>
                 <artifactId>h2</artifactId>
-                <version>2.2.220</version>
+                <version>2.2.224</version>
             </dependency>
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.7.2</version>
+                <version>42.7.3</version>
             </dependency>
             <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
-                <version>8.0.33</version>
+                <version>8.4.0</version>
             </dependency>
             <dependency>
                 <groupId>com.microsoft.sqlserver</groupId>
                 <artifactId>mssql-jdbc</artifactId>
-                <version>12.2.0.jre11</version>
+                <version>12.6.3.jre11</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -120,16 +120,16 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.9.3</version>
+            <version>5.10.3</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.24.2</version>
+            <version>3.26.0</version>
             <scope>test</scope>
         </dependency>
-        <!--suppress VulnerableLibrariesLocal - test only, no newer version available -->
+        <!--suppress VulnerableLibrariesLocal - test only -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
