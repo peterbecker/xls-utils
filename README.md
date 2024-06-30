@@ -19,6 +19,40 @@ Contents:
 Quick Start
 ===========
 
+Using the Library
+-----------------
+
+Follow the "maven central" banner above to find the correct dependency for your build tool.
+
+When writing data, the primary method to use is to open a standard POI `XSSFWorkbook` object from a template file, then 
+call the `writeData(targetName: String, rows: Iterator<List<Any?>>)` function on this. The `targetName` is the name of 
+a range or named table in the input file. This will be filled with the data in `rows`, with each item of the iterator
+representing the data for the row. The target structure (range/table) will automatically be expanded and the styles
+copied into newly created rows.
+
+If charts are used, then the `expandChartReferences(area: AreaReference)` needs to be called as well, as Excel will not
+automatically update charts. Note the limitations listed below.
+
+A full use looks something like this (excluding error handling):
+
+```kotlin
+val wb = XSSFWorkbook(File("my_template.xlsx"))
+val areaRef = wb.writeData("my_target_range", dataToIterateOver)
+wb.expandChartReferences(areaRef) // needed only when charts are used
+wb.write(targetOutputStream)
+```
+
+[The Db2Xls class](https://github.com/peterbecker/xls-utils/blob/master/db2xls/src/main/kotlin/de/peterbecker/xls/Db2Xls.kt)
+shows a more complete usage example.
+
+There are a number of additional extensions 
+[inside the main library code](https://github.com/peterbecker/xls-utils/tree/master/kotlin-xls/src/main/kotlin/de/peterbecker/xls)
+- these are grouped by the names of the POI objects they extend.
+
+There is [an additional set of functions to compare workbooks and their elements](https://github.com/peterbecker/xls-utils/blob/master/kotlin-xls/src/main/kotlin/de/peterbecker/xls/diff/CompareXls.kt).
+This is primarily intended for unit testing, see [its test cases](https://github.com/peterbecker/xls-utils/tree/master/kotlin-xls/src/test/kotlin/de/peterbecker/xls/diff)
+as to how it can be used.
+
 Downloading the Bundled Version
 -------------------------------
 
