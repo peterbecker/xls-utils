@@ -1,7 +1,7 @@
 package de.peterbecker.xls
 
 import com.sksamuel.hoplite.ConfigLoader
-import mu.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging
 import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.File
