@@ -50,7 +50,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.9.24</kotlin.version>
+        <kotlin.version>2.1.20</kotlin.version>
         <kotlin.compiler.incremental>false</kotlin.compiler.incremental>
         <jvm.target>17</jvm.target>
     </properties>
@@ -70,22 +70,22 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
-                <version>5.3.0</version>
+                <version>5.4.1</version>
             </dependency>
             <dependency>
                 <groupId>com.sksamuel.hoplite</groupId>
                 <artifactId>hoplite-hocon</artifactId>
-                <version>2.7.5</version>
+                <version>2.9.0</version>
             </dependency>
             <dependency>
                 <groupId>io.github.oshai</groupId>
                 <artifactId>kotlin-logging-jvm</artifactId>
-                <version>7.0.0</version>
+                <version>7.0.7</version>
             </dependency>
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.5.6</version>
+                <version>1.5.18</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.logging.log4j</groupId>
@@ -100,17 +100,17 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.7.3</version>
+                <version>42.7.5</version>
             </dependency>
             <dependency>
                 <groupId>com.mysql</groupId>
                 <artifactId>mysql-connector-j</artifactId>
-                <version>9.0.0</version>
+                <version>9.2.0</version>
             </dependency>
             <dependency>
                 <groupId>com.microsoft.sqlserver</groupId>
                 <artifactId>mssql-jdbc</artifactId>
-                <version>12.8.0.jre11</version>
+                <version>12.10.0.jre11</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -128,13 +128,13 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
-            <version>5.10.3</version>
+            <version>5.11.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.26.3</version>
+            <version>3.27.3</version>
             <scope>test</scope>
         </dependency>
         <!--suppress VulnerableLibrariesLocal - test only -->
